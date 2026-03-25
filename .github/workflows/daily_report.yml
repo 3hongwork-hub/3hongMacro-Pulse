@@ -3,8 +3,12 @@ name: Daily Macro Pulse Report
 on:
   schedule:
     # BEGIN GENERATED SCHEDULES
-    # KR | 17:00 KST | 08:00 UTC | Mon-Fri
-    - cron: '00 08 * * 1-5'
+    # KR | 10:00 KST | 01:00 UTC | Mon-Fri (한국 장 시작 후 1회)
+    - cron: '00 01 * * 1-5'
+    # KR | 13:00 KST | 04:00 UTC | Mon-Fri (한국 장 중간 1회)
+    - cron: '00 04 * * 1-5'
+    # KR | 16:10 KST | 07:10 UTC | Mon-Fri (한국 장 마감 후 1회)
+    - cron: '30 07 * * 1-5'
     # US | 06:30 KST | 21:30 UTC | Tue-Sat KST
     - cron: '30 21 * * 1-5'
     # END GENERATED SCHEDULES
