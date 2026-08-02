@@ -32,12 +32,12 @@ class ReportFormatConfigTests(unittest.TestCase):
         kr_schedule = get_workflow_schedule("KR", config)
         us_schedule = get_workflow_schedule("US", config)
 
-        self.assertEqual(kr_schedule.cron, "00 08 * * 1-5")
-        self.assertEqual(kr_schedule.local_time, "17:00 KST")
+        self.assertEqual(kr_schedule.cron, "00 01 * * 1-5")
+        self.assertEqual(kr_schedule.local_time, "10:00 KST")
         self.assertEqual(kr_schedule.weekdays, "Mon-Fri")
 
-        self.assertEqual(us_schedule.cron, "30 21 * * 1-5")
-        self.assertEqual(us_schedule.local_time, "06:30 KST")
+        self.assertEqual(us_schedule.cron, "00 12 * * 2-6")
+        self.assertEqual(us_schedule.local_time, "21:00 KST")
         self.assertEqual(us_schedule.weekdays, "Tue-Sat KST")
 
     def test_generate_telegram_summary_uses_external_config_order(self):
@@ -131,16 +131,22 @@ class ReportFormatConfigTests(unittest.TestCase):
             workflow_text = handle.read()
 
         self.assertTrue(workflow_matches_config(workflow_text, config))
-        self.assertIn("# KR | 17:00 KST | 08:00 UTC | Mon-Fri", workflow_text)
+        self.assertIn("# KR | 10:00 KST | 01:00 UTC | Mon-Fri", workflow_text)
         self.assertEqual(
             render_daily_workflow_schedule_block(config),
             "\n".join(
                 [
                     "    # BEGIN GENERATED SCHEDULES",
+                    "    # KR | 10:00 KST | 01:00 UTC | Mon-Fri",
+                    "    - cron: '00 01 * * 1-5'",
+                    "    # KR | 14:00 KST | 05:00 UTC | Mon-Fri",
+                    "    - cron: '00 05 * * 1-5'",
                     "    # KR | 17:00 KST | 08:00 UTC | Mon-Fri",
                     "    - cron: '00 08 * * 1-5'",
-                    "    # US | 06:30 KST | 21:30 UTC | Tue-Sat KST",
-                    "    - cron: '30 21 * * 1-5'",
+                    "    # US | 21:00 KST | 12:00 UTC | Tue-Sat KST",
+                    "    - cron: '00 12 * * 2-6'",
+                    "    # US | 06:00 KST | 21:00 UTC | Tue-Sat KST",
+                    "    - cron: '00 21 * * 1-5'",
                     "    # END GENERATED SCHEDULES",
                 ]
             ),

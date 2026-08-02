@@ -10,8 +10,8 @@ finviz_map.png
 kospi_map.png
 kosdaq_map.png
 .venv/
-.venv/
 test_report.html
 AGENTS.md
 agent.md
 .agent/
+*.egg-info/

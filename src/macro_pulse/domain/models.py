@@ -146,10 +146,23 @@ class ModeFormatConfig:
     description: str = ""
     summary_sections: list[SummarySectionConfig] = field(default_factory=list)
     screenshot_targets: list[str] = field(default_factory=list)
-    workflow_schedule: WorkflowScheduleConfig | None = None
+    workflow_schedules: tuple[WorkflowScheduleConfig, ...] = field(default_factory=tuple)
+
+    @property
+    def workflow_schedule(self) -> WorkflowScheduleConfig | None:
+        return self.workflow_schedules[0] if self.workflow_schedules else None
 
     @classmethod
     def from_mapping(cls, raw_mode: Mapping[str, Any]) -> "ModeFormatConfig":
+        schedules: list[WorkflowScheduleConfig] = []
+        if "workflow_schedules" in raw_mode and isinstance(raw_mode["workflow_schedules"], list):
+            schedules = [
+                WorkflowScheduleConfig.from_mapping(sched)
+                for sched in raw_mode["workflow_schedules"]
+            ]
+        elif "workflow_schedule" in raw_mode and raw_mode["workflow_schedule"]:
+            schedules = [WorkflowScheduleConfig.from_mapping(raw_mode["workflow_schedule"])]
+
         return cls(
             description=str(raw_mode.get("description", "")),
             summary_sections=[
@@ -159,11 +172,7 @@ class ModeFormatConfig:
             screenshot_targets=[
                 str(target) for target in raw_mode.get("screenshot_targets", [])
             ],
-            workflow_schedule=(
-                WorkflowScheduleConfig.from_mapping(raw_mode["workflow_schedule"])
-                if raw_mode.get("workflow_schedule")
-                else None
-            ),
+            workflow_schedules=tuple(schedules),
         )
 
 

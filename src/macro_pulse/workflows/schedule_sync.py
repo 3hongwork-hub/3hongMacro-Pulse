@@ -20,18 +20,16 @@ def get_workflow_schedule_entries(
     entries: list[tuple[str, str, str, str, str]] = []
 
     for mode, mode_config in config.modes.items():
-        schedule = mode_config.workflow_schedule
-        if schedule is None:
-            continue
-        entries.append(
-            (
-                mode,
-                schedule.cron,
-                schedule.local_time,
-                schedule.utc_time,
-                schedule.weekdays,
+        for schedule in mode_config.workflow_schedules:
+            entries.append(
+                (
+                    mode,
+                    schedule.cron,
+                    schedule.local_time,
+                    schedule.utc_time,
+                    schedule.weekdays,
+                )
             )
-        )
 
     if not entries:
         raise ValueError("At least one workflow schedule must be defined in config.")

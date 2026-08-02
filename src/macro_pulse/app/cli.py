@@ -28,7 +28,7 @@ def resolve_mode(market_arg: str | None, now_utc: datetime | None = None) -> str
         return normalized
 
     current_time = now_utc or datetime.now(timezone.utc)
-    return "KR" if 7 <= current_time.hour < 20 else "US"
+    return "KR" if 0 <= current_time.hour < 10 else "US"
 
 
 def build_parser() -> argparse.ArgumentParser:
