@@ -24,17 +24,15 @@ class MainTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(app_main.resolve_mode("US"), "US")
 
     def test_resolve_mode_uses_time_window_for_auto_mode(self):
-        kr_time_10 = datetime(2026, 3, 21, 1, tzinfo=timezone.utc)
-        kr_time_14 = datetime(2026, 3, 21, 5, tzinfo=timezone.utc)
-        kr_time_17 = datetime(2026, 3, 21, 8, tzinfo=timezone.utc)
-        us_time_21 = datetime(2026, 3, 21, 12, tzinfo=timezone.utc)
-        us_time_06 = datetime(2026, 3, 21, 21, tzinfo=timezone.utc)
+        kr_time_1000 = datetime(2026, 3, 21, 1, tzinfo=timezone.utc)
+        kr_time_1630 = datetime(2026, 3, 21, 7, minute=30, tzinfo=timezone.utc)
+        us_time_2330 = datetime(2026, 3, 21, 14, minute=30, tzinfo=timezone.utc)
+        us_time_0600 = datetime(2026, 3, 21, 21, tzinfo=timezone.utc)
 
-        self.assertEqual(app_main.resolve_mode("global", now_utc=kr_time_10), "KR")
-        self.assertEqual(app_main.resolve_mode("global", now_utc=kr_time_14), "KR")
-        self.assertEqual(app_main.resolve_mode("global", now_utc=kr_time_17), "KR")
-        self.assertEqual(app_main.resolve_mode(None, now_utc=us_time_21), "US")
-        self.assertEqual(app_main.resolve_mode(None, now_utc=us_time_06), "US")
+        self.assertEqual(app_main.resolve_mode("global", now_utc=kr_time_1000), "KR")
+        self.assertEqual(app_main.resolve_mode("global", now_utc=kr_time_1630), "KR")
+        self.assertEqual(app_main.resolve_mode(None, now_utc=us_time_2330), "US")
+        self.assertEqual(app_main.resolve_mode(None, now_utc=us_time_0600), "US")
 
     async def test_main_dry_run_generates_report_without_notifications(self):
         data = {

@@ -10,15 +10,9 @@
           "weekdays": "Mon-Fri"
         },
         {
-          "cron": "00 05 * * 1-5",
-          "local_time": "14:00 KST",
-          "utc_time": "05:00 UTC",
-          "weekdays": "Mon-Fri"
-        },
-        {
-          "cron": "00 08 * * 1-5",
-          "local_time": "17:00 KST",
-          "utc_time": "08:00 UTC",
+          "cron": "30 07 * * 1-5",
+          "local_time": "16:30 KST",
+          "utc_time": "07:30 UTC",
           "weekdays": "Mon-Fri"
         }
       ],
@@ -55,10 +49,10 @@
       "description": "US market close summary focused on US and European indices, commodities, crypto, and broad risk assets.",
       "workflow_schedules": [
         {
-          "cron": "00 12 * * 2-6",
-          "local_time": "21:00 KST",
-          "utc_time": "12:00 UTC",
-          "weekdays": "Tue-Sat KST"
+          "cron": "30 14 * * 1-5",
+          "local_time": "23:30 KST",
+          "utc_time": "14:30 UTC",
+          "weekdays": "Mon-Fri KST"
         },
         {
           "cron": "00 21 * * 1-5",

@@ -186,20 +186,26 @@ def take_finviz_screenshot(output_path=None):
 
     try:
         output_path = resolve_output_path(output_path, "finviz_map")
-        logger.info("Navigating to %s...", FINVIZ_URL)
-        driver.get(FINVIZ_URL)
+        for attempt in range(2):
+            try:
+                logger.info("Navigating to %s... (attempt %s)", FINVIZ_URL, attempt + 1)
+                driver.get(FINVIZ_URL)
 
-        logger.info("Waiting for map element...")
-        element = WebDriverWait(driver, 20).until(
-            EC.visibility_of_element_located((By.ID, "canvas-wrapper"))
-        )
+                logger.info("Waiting for map element...")
+                element = WebDriverWait(driver, 25).until(
+                    EC.visibility_of_element_located((By.ID, "canvas-wrapper"))
+                )
 
-        logger.info("Waiting for canvas to render...")
-        time.sleep(5)
+                logger.info("Waiting for canvas to render...")
+                time.sleep(5)
 
-        element.screenshot(output_path)
-        logger.info("Screenshot saved to %s", output_path)
-        return output_path
+                element.screenshot(output_path)
+                logger.info("Screenshot saved to %s", output_path)
+                return output_path
+            except Exception as exc:
+                logger.warning("Finviz capture attempt %s failed: %s", attempt + 1, exc)
+                if attempt == 1:
+                    raise
     except Exception as exc:
         logger.exception("Failed to take screenshot: %s", exc)
         return None

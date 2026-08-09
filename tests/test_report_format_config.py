@@ -36,9 +36,9 @@ class ReportFormatConfigTests(unittest.TestCase):
         self.assertEqual(kr_schedule.local_time, "10:00 KST")
         self.assertEqual(kr_schedule.weekdays, "Mon-Fri")
 
-        self.assertEqual(us_schedule.cron, "00 12 * * 2-6")
-        self.assertEqual(us_schedule.local_time, "21:00 KST")
-        self.assertEqual(us_schedule.weekdays, "Tue-Sat KST")
+        self.assertEqual(us_schedule.cron, "30 14 * * 1-5")
+        self.assertEqual(us_schedule.local_time, "23:30 KST")
+        self.assertEqual(us_schedule.weekdays, "Mon-Fri KST")
 
     def test_generate_telegram_summary_uses_external_config_order(self):
         custom_config = {
@@ -139,12 +139,10 @@ class ReportFormatConfigTests(unittest.TestCase):
                     "    # BEGIN GENERATED SCHEDULES",
                     "    # KR | 10:00 KST | 01:00 UTC | Mon-Fri",
                     "    - cron: '00 01 * * 1-5'",
-                    "    # KR | 14:00 KST | 05:00 UTC | Mon-Fri",
-                    "    - cron: '00 05 * * 1-5'",
-                    "    # KR | 17:00 KST | 08:00 UTC | Mon-Fri",
-                    "    - cron: '00 08 * * 1-5'",
-                    "    # US | 21:00 KST | 12:00 UTC | Tue-Sat KST",
-                    "    - cron: '00 12 * * 2-6'",
+                    "    # KR | 16:30 KST | 07:30 UTC | Mon-Fri",
+                    "    - cron: '30 07 * * 1-5'",
+                    "    # US | 23:30 KST | 14:30 UTC | Mon-Fri KST",
+                    "    - cron: '30 14 * * 1-5'",
                     "    # US | 06:00 KST | 21:00 UTC | Tue-Sat KST",
                     "    - cron: '00 21 * * 1-5'",
                     "    # END GENERATED SCHEDULES",
