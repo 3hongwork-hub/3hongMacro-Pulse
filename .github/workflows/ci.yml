@@ -16,16 +16,20 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v5
 
-    - name: Build runtime image
-      run: docker build -t macro-pulse:ci .
+    - name: Install uv
+      uses: astral-sh/setup-uv@v5
+      with:
+        enable-cache: true
 
-    - name: Run unit tests in Docker
+    - name: Set up Python
+      run: uv python install
+
+    - name: Install dependencies
+      run: uv sync --frozen --all-groups
+
+    - name: Run unit tests
       run: |
-        docker run --rm \
-          -v "$PWD:/app" \
-          -w /app \
-          macro-pulse:ci \
-          sh -lc "uv run --frozen python -m unittest discover tests 2>&1 | tee unit-test.log"
+        uv run --frozen python -m unittest discover tests 2>&1 | tee unit-test.log
 
     - name: Upload CI artifacts
       if: always()
@@ -33,4 +37,5 @@ jobs:
       with:
         name: ci-logs
         path: unit-test.log
+        retention-days: 1
         if-no-files-found: ignore
