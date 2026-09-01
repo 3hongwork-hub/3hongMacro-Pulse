@@ -7,8 +7,6 @@ on:
     - cron: '00 01 * * 1-5'
     # KR | 16:30 KST | 07:30 UTC | Mon-Fri
     - cron: '30 07 * * 1-5'
-    # US | 23:30 KST | 14:30 UTC | Mon-Fri KST
-    - cron: '30 14 * * 1-5'
     # US | 06:00 KST | 21:00 UTC | Tue-Sat KST
     - cron: '00 21 * * 1-5'
     # END GENERATED SCHEDULES

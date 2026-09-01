@@ -49,12 +49,6 @@
       "description": "US market close summary focused on US and European indices, commodities, crypto, and broad risk assets.",
       "workflow_schedules": [
         {
-          "cron": "30 14 * * 1-5",
-          "local_time": "23:30 KST",
-          "utc_time": "14:30 UTC",
-          "weekdays": "Mon-Fri KST"
-        },
-        {
           "cron": "00 21 * * 1-5",
           "local_time": "06:00 KST",
           "utc_time": "21:00 UTC",
